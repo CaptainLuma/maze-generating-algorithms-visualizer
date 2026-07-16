@@ -1,0 +1,244 @@
+body {
+    background-color: rgb(30, 30, 30);
+    /* background-image: linear-gradient(to bottom, rgb(30, 20, 30), rgb(30, 30, 50)); */
+    color: white;
+    font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    font-size: 18px;
+    /* font-weight: 300; */
+}
+
+h1, h2 {
+    font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+
+
+ol {
+    list-style: decimal;
+    /* list-style-position: inside; */
+    padding-left: 20px;
+    font-weight: 300;
+}
+
+ol li {
+  padding-left: 8px;
+}
+
+ol li::marker {
+  font-weight: bold;
+}
+
+.inner_ordered_list {
+    list-style-type: lower-alpha;
+}
+
+/* p {
+    font-size: 18px;
+    font-weight: 300;
+} */
+
+.main {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100dvh;
+
+    /* border: 2px solid yellow; */
+    /* background-color: rgb(0, 0, 100); */
+}
+
+.top_bar, .bottom_bar {
+    gap: 20px;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: none;
+}
+
+
+.top_bar > div, .bottom_bar > div {
+    /* border: 2px solid lime; */
+    display: flex;
+    gap: 20px;
+}
+
+.col_left {
+    justify-content: left;
+}
+
+.col_middle {
+    justify-content: center;
+}
+
+.col_right {
+    justify-content: right;
+}
+
+@media screen and (width <= 950px) {
+    .bottom_bar {
+        grid-template-columns: none;
+        grid-template-rows: auto;
+        padding: 5px 30px
+    }
+
+    .bottom_bar .col_left,
+    .bottom_bar .col_middle,
+    .bottom_bar .col_right {
+        justify-content: center;
+    }
+}
+
+@media screen and (width <= 750px) {
+    .top_bar {
+        grid-template-columns: none;
+        grid-template-rows: auto;
+        padding: 5px 30px
+    }
+
+    .col_left,
+    .col_middle,
+    .col_right {
+        justify-content: center;
+    }
+}
+
+#center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    /* border: 2px solid red; */
+}
+
+/* #canvas {
+    border: 3px solid lime;
+} */
+
+button, select {
+    background-color: rgb(60, 60, 60);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 5px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+button:hover {
+    background-color: rgb(80, 80, 80);
+}
+
+select:focus {
+  outline: none;
+}
+
+label, p {
+    font-size: 20px;
+    /* border: 2px solid lime; */
+    display: flex;
+    align-items: center;
+}
+
+input {
+    background-color: rgb(60, 60, 60);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 5px 5px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+#play_icon > svg, #pause_icon > svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    /* border: 2px solid lime; */
+}
+
+#algorithm_info_overlay_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box; /* width and height include padding */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+/* #algorithm_info_overlay > div {
+    border: 2px solid lime;
+    padding: 50px;
+} */
+
+#algorithm_info {
+    box-sizing: border-box;
+    max-width: 750px;
+    width: 100%;
+    /* min-width: 600px; */
+    /* min-height: 480px; */
+    /* height: calc((9 / 16) * 50vw); */
+    /* max-height: calc(80vh - 169px); */
+    display: block;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+    background-color: rgb(50, 50, 50);
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    padding: 30px;
+    margin-bottom: 30px; /* this should be equal to the height of the close symbol + margin */
+}
+
+#algorithm_info p {
+    padding-left: 20px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.close_button_container {
+    box-sizing: border-box;
+    max-width: 750px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 5px;
+
+    /* border: 2px solid lime; */
+}
+
+#algorithm_info_close_button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+
+.hidden {
+    display: none;
+}
+
+.border {
+    border: 2px solid lime;
+}
+
+.indented {
+    text-indent: 40px;
+}
+/* 
+canvas {
+    border: 2px solid lime;
+} */

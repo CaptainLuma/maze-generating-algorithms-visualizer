@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maze Generator</title>
+
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <div class="top_bar">
+            <div class="col_left">
+                <label for="maze_size">Maze Size:</label>
+                <input
+                    type="number"
+                    id="maze_size"
+                    name="maze_size"
+                    min="2"
+                    max="500"
+                    step="1"
+                    required
+                    value="10"
+                    >
+            </div>
+            
+            <div class="col_middle">
+                <select id="algorithm_select">
+                    <option value="recursive_backtracking">Recursive Backtracking</option>
+                    <option value="prims_algorithm">Prim's Algorithm</option>
+                    <option value="origin_shift">Origin Shift</option>
+                    <option value="hunt_and_kill">Hunt and Kill</option>
+                    <option value="kruskals_algorithm">Kruskal's Algorithm</option>
+                    <option value="aldous_broder">Aldous Broder</option>
+                </select>
+            </div>
+
+            <div class="col_right">
+                <button id="open_algorithm_info_button">Algorithm Info</button>
+            </div>
+        </div>
+
+        <!-- Canvas element -->
+        <div id="center">
+            <canvas id="canvas"></canvas>
+             <!-- <p>This is some dummy text</p> -->
+        </div>
+
+        <div class="bottom_bar">
+            <div class="col_left">
+                <p>Animation Speed: </p>
+                <select id="speed_select">
+                    <option value="0.1">x 0.1</option>
+                    <option value="0.25">x 0.25</option>
+                    <option value="0.5">x 0.5</option>
+                    <option value="1" selected="selected">x 1</option>
+                    <option value="2">x 2</option>
+                    <option value="4">x 4</option>
+                    <option value="8">x 8</option>
+                    <option value="instant">Instant</option>
+                </select>
+            </div>
+
+            <div class="col_middle">
+                <button id="button_reset">Reset</button>
+
+                <!-- <button id="button_generate">Generate</button> -->
+                <button id="play_pause_button">
+                    <!-- <img src="images/play-svgrepo-com.svg" width="24px" alt=""> -->
+                    <div id="play_icon">
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" fill="#EEEEEE"/>
+                        </svg>
+                    </div>
+                    
+                    <div id="pause_icon" class="hidden">
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 6C2 4.11438 2 3.17157 2.58579 2.58579C3.17157 2 4.11438 2 6 2C7.88562 2 8.82843 2 9.41421 2.58579C10 3.17157 10 4.11438 10 6V18C10 19.8856 10 20.8284 9.41421 21.4142C8.82843 22 7.88562 22 6 22C4.11438 22 3.17157 22 2.58579 21.4142C2 20.8284 2 19.8856 2 18V6Z" fill="#EEEEEE"/>
+                        <path d="M14 6C14 4.11438 14 3.17157 14.5858 2.58579C15.1716 2 16.1144 2 18 2C19.8856 2 20.8284 2 21.4142 2.58579C22 3.17157 22 4.11438 22 6V18C22 19.8856 22 20.8284 21.4142 21.4142C20.8284 22 19.8856 22 18 22C16.1144 22 15.1716 22 14.5858 21.4142C14 20.8284 14 19.8856 14 18V6Z" fill="#EEEEEE"/>
+                    </svg>
+                    </div>
+                    
+                </button>
+                <button id="button_step">Step</button>
+            </div>
+            
+            <div class="col_right">
+                <!-- <button id="button_settings">Settings</button> -->
+            </div>
+        </div>
+
+        <!-- algorithm info modal -->
+        <div id="algorithm_info_overlay" class="hidden">
+            <div id="algorithm_info_overlay_background">
+                <div class="close_button_container">
+                    <svg id="algorithm_info_close_button" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_429_11083)">
+                    <path d="M7 7.00006L17 17.0001M7 17.0001L17 7.00006" stroke="#EEEEEE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_429_11083">
+                    <rect width="24" height="24" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+                </div>
+
+                <div id="algorithm_info">
+                    <div id="alg_not_found" class="hidden">
+                        <h2>Missing</h2>
+                        <p>A desciption for this algorithm hasn't been added yet.</p>
+                    </div>
+
+                    <div id="alg_info_recursive_backtracking" class="hidden">
+                        <h2>Recursive Backtracking / Depth First Search</h2>
+
+                        <ol>
+                            <li>Set any cell to the active cell.</li>
+                            <li>Repeat the following:
+                                <ol class="inner_ordered_list">
+                                    <li>Branch from the active cell to a random neighboring cell that has not yet been visited. This becomes the new active cell.</li>
+                                    <li>If all neighboring cells have been visited, travel to the previously visited cell.</li>
+                                </ol>
+                            </li>
+                            <li>The maze is complete once the active cell returns to the first activated cell.</li>
+                        </ol>
+                    </div>
+                    
+                    <div id="alg_info_origin_shift" class="hidden">
+                        <h2>Origin Shift / Reverse Aldous Broder</h2>
+
+                        <ol>
+                            <li>Start with any perfect maze. The maze must be a root directed tree, meaning each node must point to another node, with a single node pointing nowhere.</li>
+                            <li>Repeat for as many times as you'd like:
+                                <ol class="inner_ordered_list">
+                                    <li>have the origin (root) node point to a random neighboring node.</li>
+                                    <li>Remove the neighboring nodes pointer and call it the new root node.</li>
+                                </ol>
+                            </li> 
+                        </ol>
+                    </div>
+
+                    <div id="alg_info_prims" class="hidden">
+                        <h2>Prim's Algorithm</h2>
+
+                        <ol>
+                            <li>Mark any cell as visited.</li>
+                            <li>Repeat until all cells are visited:
+                                <ol class="inner_ordered_list">
+                                    <li>Pick a random visited cell that has at least one unvisited neighbor.</li>
+                                    <li>From this cell, branch to a random unvisited neighbor. Add this neighbor to the list of visited cells.</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div id="alg_info_hunt_and_kill" class="hidden">
+                        <h2>Hunt And Kill Algorithm</h2>
+
+                        <ol>
+                            <li>Set any cell to the active cell.</li>
+                            <li>Repeat the following:
+                                <ol class="inner_ordered_list">
+                                    <li>If not in hunt mode: Branch from the active cell to a random neighboring cell that has not yet been visited. This becomes the new active cell. If all neighboring cells have been visited, enter "hunt" mode.</li>
+                                    <li>If in hunt mode: Scan through each cell in the grid until a visited cell with at least one unvisited neighbor is found. Set this to the new active cell, and exit hunt mode. If a valid cell is not found, the maze is complete.</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div id="alg_kruskals" class="hidden">
+                        <h2>Kruskal's Algorithm</h2>
+
+                        <ol>
+                            <li>Initialize each node to be a part of their own set.</li>
+                            <li>Repeat the following for every connection in random order:
+                                <ol class="inner_ordered_list">
+                                    <li>If the two nodes for this connection are part of different sets, connect the nodes and join their sets.</li>
+                                    <li>Do nothing if the nodes are already part of the same set.</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div id="alg_aldous_broder" class="hidden">
+                        <h2>Aldous Broder</h2>
+
+                        <ol>
+                            <li>Set any cell to the active cell</li>
+                            <li>Repeat the following:
+                                <ol class="inner_ordered_list">
+                                    <li>Move the active cell to a random neighboring cell</li>
+                                    <li>If the new cell hasn't been visited before, carve a path to it from the previous active cell.</li>
+                                </ol>
+                            </li>
+                            <li>Conclude the algorithm once every cell has been visited by the active cell.</li>
+                        </ol>
+                    </div>
+                </div> <!-- end of algorithm info -->
+            </div>
+        </div> <!-- end of algorithm info overlay -->
+    </div> <!-- end of main -->
+
+
+    <!-- Load JavaScript -->
+    <script src="main.js" type="module"></script>
+    <!-- <script src="tests.js" type="module"></script> -->
+</body>
+</html>
